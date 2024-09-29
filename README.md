@@ -2,14 +2,14 @@ This is a fork of the [Betaflight](https://github.com/betaflight/betaflight) fli
 
 I'm a newcomer to the drone community, where I came together with my son.
 
-My objective is to understand the way the flight controller work in order to be able to extend it with new control algorithms. The medium-term objective I have is to be able to allow my quad drone to maintain a stick in equilibrium on top of it. This is a form of [inverted pendulum](https://en.wikipedia.org/wiki/Inverted_pendulum), and a nice ersatz for the basic control problems behind space launchers.
+My objective is to understand the way the flight controller works in order to be able to extend it with new control algorithms. The medium-term objective I have is to be able to allow my quad drone to maintain a stick in equilibrium on top of it. This is a form of [inverted pendulum](https://en.wikipedia.org/wiki/Inverted_pendulum), and a nice ersatz for the basic control problems behind space launchers.
 
 For now, I have managed to:
 * Order the hardware and build the drone. I will add the list shortly.
 * Sort out the initial communication and configuration problems (charging a battery, assigning aux channels...)
 * Recompile betaflight and flash it (and the drone still works!).
 * Identify the basic elements of the computer hardware and software of my SpeedyBee f405 v4 flight controller stack (e.g. interrupts, determine exactly what files get compiled for my configuration, and under which options...).
-* Start to understand the basics of rate adjusting (for throttle, pitch, roll, yaw), which will allow me at some point to achieve stable flight indoors. The drone I bought is a tad too powerful, in order to support, when the project is completed, the inverted pendulum stick. This means that the learning curve for piloting it is steep (and I learned to have a lot of respect for the propellers, after one of them tried to grind one of my fingers).
+* Start to understand the basics of rate adjusting (for throttle, pitch, roll, yaw), which will allow me at some point to achieve stable flight indoors. The drone I bought is a tad too powerful, in order to support, when the project is completed, the inverted pendulum stick. This means that the learning curve for piloting is steep (I already learned to have a lot of respect for the propellers, after one of them tried to grind one of my fingers).
 
 The next steps, not necessarily in order:
 * Flash to the FS-I6 transmitter and the fs-ai6b receiver to add 10 channels (under ibus protocol).
