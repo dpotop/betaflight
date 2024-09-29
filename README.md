@@ -2,7 +2,7 @@ This is a fork of the [Betaflight](https://github.com/betaflight/betaflight) fli
 
 I'm a newcomer to the drone community, where I came together with my son.
 
-My objective is to understand the way the flight controller works in order to be able to extend it with new control algorithms. The medium-term objective I have is to be able to allow my quad drone to maintain a stick in equilibrium on top of it. This is a form of [inverted pendulum](https://en.wikipedia.org/wiki/Inverted_pendulum), and a nice ersatz for the basic control problems behind space launchers.
+My objective is to understand the way the flight controller works in order to be able to extend it with new control algorithms. The medium-term objective I have is to be able to allow my quad drone to [maintain a stick in equilibrium on top of it](https://www.youtube.com/watch?v=XmYRQi48s-8). This is a form of [inverted pendulum](https://en.wikipedia.org/wiki/Inverted_pendulum), and a nice ersatz for the basic control problems behind space launchers.
 
 For now, I have managed to:
 * Order the hardware and build the drone. I will add the list shortly.
