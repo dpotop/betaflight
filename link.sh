@@ -2,9 +2,7 @@
 
 set -x
 
-./tools/arm-gnu-toolchain-13.2.Rel1-darwin-x86_64-arm-none-eabi/bin/arm-none-eabi-gcc  \
--o ./betaflight_STM32F405_SPEEDYBEEF405V4.elf \
-src/main/startup/stm32/startup_stm32f40xx.o \
+LINKFILES=(src/main/startup/stm32/startup_stm32f40xx.o \
 src/main/drivers/accgyro/accgyro_mpu.o \
 src/main/drivers/dshot_bitbang_decode.o \
 src/main/drivers/inverter.o \
@@ -426,8 +424,20 @@ src/main/drivers/mcu/stm32/vcpf4/usbd_cdc_vcp.o \
 src/main/drivers/mcu/stm32/vcpf4/usb_cdc_hid.o \
 src/main/drivers/mcu/stm32/serial_usb_vcp.o \
 src/main/drivers/usb_io.o \
-lib/main/google/olc/olc.o \
--lm -nostartfiles --specs=nano.specs -lc -lnosys -mthumb -mcpu=cortex-m4 -march=armv7e-m \
+lib/main/google/olc/olc.o)
+
+# GCC seems needed for link because the application makes use of
+# link-time optimizations (which cannot be performed by LD?).
+# The compiler flags are here "-flto=auto -fuse-linker-plugin"
+# and some other optimization flags make more sense from this
+# perspective, such as -fmerge-all-constants -Ofast. But clearly
+# I won't be able to have a transparent linking phase.
+./tools/arm-gnu-toolchain-13.2.Rel1-darwin-x86_64-arm-none-eabi/bin/arm-none-eabi-gcc \
+-o ./betaflight_STM32F405_SPEEDYBEEF405V4.elf \
+${LINKFILES[@]} \
+-lm -nostartfiles \
+--specs=nano.specs -lc \
+-lnosys -mthumb -mcpu=cortex-m4 -march=armv7e-m \
 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -fsingle-precision-constant -flto=auto -fuse-linker-plugin \
 -ffast-math -fmerge-all-constants -Ofast  -static \
 -Wl,-gc-sections,-Map,./betaflight_STM32F405_SPEEDYBEEF405V4.map \
@@ -437,3 +447,16 @@ lib/main/google/olc/olc.o \
 
 ./tools/arm-gnu-toolchain-13.2.Rel1-darwin-x86_64-arm-none-eabi/bin/arm-none-eabi-size ./betaflight_STM32F405_SPEEDYBEEF405V4.elf
 ./tools/arm-gnu-toolchain-13.2.Rel1-darwin-x86_64-arm-none-eabi/bin/arm-none-eabi-objcopy -O ihex --set-start 0x8000000 ./betaflight_STM32F405_SPEEDYBEEF405V4.elf ./betaflight_4.6.0_STM32F405_SPEEDYBEEF405V4.hex
+
+# Working without the standard libs requires replacing:
+#   --specs=nano.specs -lc
+# with
+#   -nostdlib
+# (and don't forget the line continuations).
+# To get details on what is done, instead of gcc, use gcc -v
+# When first trying to do this, I get no warnings due to the absence
+# of, say, malloc and free, only 4 functions are missing:
+#    in function `_close_r': _close is not implemented and will always fail
+#    in function `_lseek_r': _lseek is not implemented and will always fail
+#    in function `_read_r': _read is not implemented and will always fail
+#    in function `_write_r': _write is not implemented and will always fail
