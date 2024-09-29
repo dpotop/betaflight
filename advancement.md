@@ -1,6 +1,6 @@
 # 29-09-2024 - Separate compilation scripts
 
-I have added in [compilation.md](compilation.md) instructions that work on the current version of betaflight (the version from the documentation is no longer complete and correct).
+I have added in [compilation.md](compilation.md) instructions that work on the current version of betaflight on MacOS, as [the current version from the official doc](https://betaflight.com/docs/development/building/Building-in-Mac-OSX) is no longer complete and correct. It seems [the Linux version of the instructions](https://betaflight.com/docs/development/building/Building-Betaflight-on-Windows-the-Linux-subsystem-way) is correct.
 
 To be able to finely control compilation, what is included and what not into my executables, I have extracted separate compilation scripts ([compile.sh](compile.sh),[link.sh](link.sh),[clean.sh](clean.sh)). To extract them, I simply dry-run the compilation process with ```make -n```.
 
