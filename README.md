@@ -5,7 +5,7 @@ I'm a newcomer to the drone community, where I came together with my son.
 My objective is to understand the way the flight controller work in order to be able to extend it with new control algorithms. The medium-term objective I have is to be able to allow my quad drone to maintain a stick in equilibrium on top of it. This is a form of [inverted pendulum](https://en.wikipedia.org/wiki/Inverted_pendulum), and a nice ersatz for the basic control problems behind space launchers.
 
 For now, I have managed to:
-* Order the hardware and build the drone.
+* Order the hardware and build the drone. I will add the list shortly.
 * Sort out the initial communication and configuration problems (charging a battery, assigning aux channels...)
 * Recompile betaflight and flash it (and the drone still works!).
 * Identify the basic elements of the computer hardware and software of my SpeedyBee f405 v4 flight controller stack (e.g. interrupts, determine exactly what files get compiled for my configuration, and under which options...).
