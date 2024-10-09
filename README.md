@@ -17,8 +17,7 @@ For now, I have managed to:
   * I don't yet have the link from interrupts to tasks (and I did not yet understand the scheduling algorithm).
 * Start to understand the basics of rate adjusting (for throttle, pitch, roll, yaw), which will allow me at some point to achieve stable flight indoors. The drone I bought is a tad too powerful. But I needed it this way, in order to support, when the project is completed, the inverted pendulum stick. This means that the learning curve for piloting is steep (I already learned to have a lot of respect for the propellers, after one of them tried to grind one of my fingers).
   * I have started to play with the configuration of the rates, but the result is not yet intuitive to me, even though I have drastically reduced the max power on throttle and the 3 degrees of freedom. 
-* Add ibus telemetry (which requires some soldering of a diode and resistor), following the instruction of [this page](https://betaflight.com/docs/wiki/guides/current/ibus-telemetry). This required a diode, a resistor, and some soldering. The configurator is incredible for now.
-
+* Add ibus telemetry, following the instruction of [this page](https://betaflight.com/docs/wiki/guides/current/ibus-telemetry). This required a diode, a resistor, and some soldering. I am really impressed at how easy it was to re-configure the drone afterwards using the [configurator app](https://app.betaflight.com).
 
 The next steps, not necessarily in order:
 * Flash to the FS-I6 transmitter and the fs-ai6b receiver to add 10 channels (under ibus protocol).
