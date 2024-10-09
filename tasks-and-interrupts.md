@@ -4,7 +4,7 @@ There seems to be no periodic triggering of tasks. Instead, there is a free-runn
 
 # The tasks
 
-They are all listed in emacs src/main/fc/tasks.c, in the task_attributes data table,
+They are all listed in emacs [src/main/fc/tasks.c](src/main/fc/tasks.c), in the task_attributes data table,
 each task defining its name, optional sub-name, check and task functions, desired period,
 and priority.
 
@@ -12,75 +12,96 @@ Each task receives a pre-designated number (cf. "Designated initializers" in htt
 The identifiers, as well as TASK_COUNT, are set up in ./src/main/scheduler/scheduler.h.
 
 Most periods are defined as frequencies using macro TASK_PERIOD_HZ:
-  *    1Hz                      : ADC_INTERNAL
-  *    5Hz                      : BATTERY_ALERTS, VTXCTRL, CAMCTRL, 
-  *   10Hz                      : SYSTEM, STACK_CHECK, DASHBOARD, RANGEFINDER, 
-  *   20Hz                      : CMS, RCDEVICE, PINIOBOX, 
-  *   33Hz                      : RX, 
-  *   50Hz                      : BATTERY_CURRENT, BST_MASTER_PROCESS, 
-  *  100Hz                      : SERIAL, ATTITUDE, BEEPER, ESC_SENSOR, SPEED_NEGOTIATION, RC_STATS
-  *  250Hz                      : TRANSPONDER, TELEMETRY, 
-  * 1000Hz                      : MAIN, ACCEL, DISPATCH, 
-  * SLOW_VOLTAGE_TASK_FREQ_HZ   : BATTERY_VOLTAGE,
-  * TASK_GPS_RATE               : GPS, 
-  * TASK_GPS_RESCUE_RATE_HZ     : GPS_RESCUE,
-  * ALTHOLD_TASK_RATE_HZ        : ALTHOLD
-  * TASK_COMPASS_RATE_HZ        : COMPASS
-  * TASK_BARO_RATE_HZ           : BARO
-  * TASK_ALTITUDE_RATE_HZ       : ALTITUDE
-  * OSD_FRAMERATE_DEFAULT_HZ    : OSD,
-  * TASK_LEDSTRIP_RATE_HZ       : LEDSTRIP
-  * 
+
+| Frequency                     | Tasks                                                               |
+| ----------------------------- | ------------------------------------------------------------------- |
+| 1Hz                           | ADC_INTERNAL |
+| 5Hz                           | BATTERY_ALERTS, VTXCTRL, CAMCTRL |
+| 10Hz                          | SYSTEM, STACK_CHECK, DASHBOARD, RANGEFINDER |
+| 20Hz                          | CMS, RCDEVICE, PINIOBOX |
+| 33Hz                          | RX |
+| 50Hz                          | BATTERY_CURRENT, BST_MASTER_PROCESS |
+| 100Hz                         | SERIAL, ATTITUDE, BEEPER, ESC_SENSOR, SPEED_NEGOTIATION, RC_STATS |
+| 250Hz                         | TRANSPONDER, TELEMETRY |
+| 1000Hz                        | MAIN, ACCEL, DISPATCH |
+| SLOW_VOLTAGE_TASK_FREQ_HZ     | BATTERY_VOLTAGE |
+| TASK_GPS_RATE                 | GPS |
+| TASK_GPS_RESCUE_RATE_HZ       | GPS_RESCUE |
+| ALTHOLD_TASK_RATE_HZ          | ALTHOLD |
+| TASK_COMPASS_RATE_HZ          | COMPASS |
+| TASK_BARO_RATE_HZ             | BARO |
+| TASK_ALTITUDE_RATE_HZ         | ALTITUDE |
+| OSD_FRAMERATE_DEFAULT_HZ      | OSD |
+| TASK_LEDSTRIP_RATE_HZ         | LEDSTRIP |
+
 But some are directly defined as periods:
-  * TASK_GYROPID_DESIRED_PERIOD : GYRO, FILTER, PID
+
+| Period                        | Tasks                                                               |
+| ----------------------------- | ------------------------------------------------------------------- |
+| TASK_GYROPID_DESIRED_PERIOD   | GYRO, FILTER, PID |
 
 Task priorities:
-  * REALTIME    : GYRO, FILTER, PID
-  * HIGH        : RX, DISPATCH, 
-  * MEDIUM_HIGH : SYSTEM, MAIN, 
-  * MEDIUM      : BATTERY_ALERTS, BATTERY_VOLTAGE, BATTERY_CURRENT, ACCEL, ATTITUDE, GPS, GPS_RESCUE, RCDEVICE, 
-  * LOW         : SERIAL, TRANSPONDER, BEEPER, ATHOLD, COMPASS, BARO, ALTITUDE, DASHBOARD, OSD, TELEMETRY, LEDSTRIP, SENSOR, CMS, CAMCTRL, SPEED_NEGOTIATION, RC_STATS
-  * LOWEST      : STACH_CHECK, BST_MASTER_PROCESS, VTXCTRL, ADC_INTERNAL, PINIOBOX, RANGEFINDER, 
+
+| Priority    | Tasks                                                               |
+| ------------| ------------------------------------------------------------------- |
+| REALTIME    | GYRO, FILTER, PID |
+| HIGH        | RX, DISPATCH |
+| MEDIUM_HIGH | SYSTEM, MAIN |
+| MEDIUM      | BATTERY_ALERTS, BATTERY_VOLTAGE, BATTERY_CURRENT, ACCEL, ATTITUDE, GPS, GPS_RESCUE, RCDEVICE |
+| LOW         | SERIAL, TRANSPONDER, BEEPER, ATHOLD, COMPASS, BARO, ALTITUDE, DASHBOARD, OSD, TELEMETRY, LEDSTRIP, SENSOR, CMS, CAMCTRL, SPEED_NEGOTIATION, RC_STATS |
+| LOWEST      | STACH_CHECK, BST_MASTER_PROCESS, VTXCTRL, ADC_INTERNAL, PINIOBOX, RANGEFINDER |
   
 
 The original description:
-  * [TASK_SYSTEM]: SYSTEM/LOAD   ", NULL, taskSystemLoad, TASK_PERIOD_HZ(10), TASK_PRIORITY_MEDIUM_HIGH)
-  * [TASK_MAIN] = DEFINE_TASK("SYSTEM", "UPDATE", NULL, taskMain, TASK_PERIOD_HZ(1000), TASK_PRIORITY_MEDIUM_HIGH),
-  * [TASK_SERIAL] = DEFINE_TASK("SERIAL", NULL, NULL, taskHandleSerial, TASK_PERIOD_HZ(100), TASK_PRIORITY_LOW), // 100 Hz should be enough to flush up to 115 bytes @ 115200 baud
-  * [TASK_BATTERY_ALERTS] = DEFINE_TASK("BATTERY_ALERTS", NULL, NULL, taskBatteryAlerts, TASK_PERIOD_HZ(5), TASK_PRIORITY_MEDIUM),
-  * [TASK_BATTERY_VOLTAGE] = DEFINE_TASK("BATTERY_VOLTAGE", NULL, NULL, batteryUpdateVoltage, TASK_PERIOD_HZ(SLOW_VOLTAGE_TASK_FREQ_HZ), TASK_PRIORITY_MEDIUM), // Freq may be updated in tasksInit
-  * [TASK_BATTERY_CURRENT] = DEFINE_TASK("BATTERY_CURRENT", NULL, NULL, batteryUpdateCurrentMeter, TASK_PERIOD_HZ(50), TASK_PRIORITY_MEDIUM),
-  * [TASK_TRANSPONDER] = DEFINE_TASK("TRANSPONDER", NULL, NULL, transponderUpdate, TASK_PERIOD_HZ(250), TASK_PRIORITY_LOW),
-  * [TASK_STACK_CHECK] = DEFINE_TASK("STACKCHECK", NULL, NULL, taskStackCheck, TASK_PERIOD_HZ(10), TASK_PRIORITY_LOWEST),
-  * [TASK_GYRO] = DEFINE_TASK("GYRO", NULL, NULL, taskGyroSample, TASK_GYROPID_DESIRED_PERIOD, TASK_PRIORITY_REALTIME),
-  * [TASK_FILTER] = DEFINE_TASK("FILTER", NULL, NULL, taskFiltering, TASK_GYROPID_DESIRED_PERIOD, TASK_PRIORITY_REALTIME),
-  * [TASK_PID] = DEFINE_TASK("PID", NULL, NULL, taskMainPidLoop, TASK_GYROPID_DESIRED_PERIOD, TASK_PRIORITY_REALTIME),
-  * [TASK_ACCEL] = DEFINE_TASK("ACC", NULL, NULL, taskUpdateAccelerometer, TASK_PERIOD_HZ(1000), TASK_PRIORITY_MEDIUM),
-  * [TASK_ATTITUDE] = DEFINE_TASK("ATTITUDE", NULL, NULL, imuUpdateAttitude, TASK_PERIOD_HZ(100), TASK_PRIORITY_MEDIUM),
-  * [TASK_RX] = DEFINE_TASK("RX", NULL, rxUpdateCheck, taskUpdateRxMain, TASK_PERIOD_HZ(33), TASK_PRIORITY_HIGH), // If event-based scheduling doesn't work, fallback to periodic scheduling
-  * [TASK_DISPATCH] = DEFINE_TASK("DISPATCH", NULL, NULL, dispatchProcess, TASK_PERIOD_HZ(1000), TASK_PRIORITY_HIGH),
-  * [TASK_BEEPER] = DEFINE_TASK("BEEPER", NULL, NULL, beeperUpdate, TASK_PERIOD_HZ(100), TASK_PRIORITY_LOW),
-  * [TASK_GPS] = DEFINE_TASK("GPS", NULL, NULL, gpsUpdate, TASK_PERIOD_HZ(TASK_GPS_RATE), TASK_PRIORITY_MEDIUM), // Required to prevent buffer overruns if running at 115200 baud (115 bytes / period < 256 bytes buffer)
-  * [TASK_GPS_RESCUE] = DEFINE_TASK("GPS_RESCUE", NULL, NULL, taskGpsRescue, TASK_PERIOD_HZ(TASK_GPS_RESCUE_RATE_HZ), TASK_PRIORITY_MEDIUM),
-  * [TASK_ALTHOLD] = DEFINE_TASK("ALTHOLD", NULL, NULL, updateAltHoldState, TASK_PERIOD_HZ(ALTHOLD_TASK_RATE_HZ), TASK_PRIORITY_LOW),
-  * [TASK_COMPASS] = DEFINE_TASK("COMPASS", NULL, NULL, taskUpdateMag, TASK_PERIOD_HZ(TASK_COMPASS_RATE_HZ), TASK_PRIORITY_LOW),
-  * [TASK_BARO] = DEFINE_TASK("BARO", NULL, NULL, taskUpdateBaro, TASK_PERIOD_HZ(TASK_BARO_RATE_HZ), TASK_PRIORITY_LOW),
-  * [TASK_ALTITUDE] = DEFINE_TASK("ALTITUDE", NULL, NULL, taskCalculateAltitude, TASK_PERIOD_HZ(TASK_ALTITUDE_RATE_HZ), TASK_PRIORITY_LOW),
-  * [TASK_DASHBOARD] = DEFINE_TASK("DASHBOARD", NULL, NULL, dashboardUpdate, TASK_PERIOD_HZ(10), TASK_PRIORITY_LOW),
-  * [TASK_OSD] = DEFINE_TASK("OSD", NULL, osdUpdateCheck, osdUpdate, TASK_PERIOD_HZ(OSD_FRAMERATE_DEFAULT_HZ), TASK_PRIORITY_LOW),
-  * [TASK_TELEMETRY] = DEFINE_TASK("TELEMETRY", NULL, NULL, taskTelemetry, TASK_PERIOD_HZ(250), TASK_PRIORITY_LOW),
-  * [TASK_LEDSTRIP] = DEFINE_TASK("LEDSTRIP", NULL, NULL, ledStripUpdate, TASK_PERIOD_HZ(TASK_LEDSTRIP_RATE_HZ), TASK_PRIORITY_LOW),
-  * [TASK_BST_MASTER_PROCESS] = DEFINE_TASK("BST_MASTER_PROCESS", NULL, NULL, taskBstMasterProcess, TASK_PERIOD_HZ(50), TASK_PRIORITY_LOWEST),
-  * [TASK_ESC_SENSOR] = DEFINE_TASK("ESC_SENSOR", NULL, NULL, escSensorProcess, TASK_PERIOD_HZ(100), TASK_PRIORITY_LOW),
-  * [TASK_CMS] = DEFINE_TASK("CMS", NULL, NULL, cmsHandler, TASK_PERIOD_HZ(20), TASK_PRIORITY_LOW),
-  * [TASK_VTXCTRL] = DEFINE_TASK("VTXCTRL", NULL, NULL, vtxUpdate, TASK_PERIOD_HZ(5), TASK_PRIORITY_LOWEST),
-  * [TASK_RCDEVICE] = DEFINE_TASK("RCDEVICE", NULL, NULL, rcdeviceUpdate, TASK_PERIOD_HZ(20), TASK_PRIORITY_MEDIUM),
-  * [TASK_CAMCTRL] = DEFINE_TASK("CAMCTRL", NULL, NULL, taskCameraControl, TASK_PERIOD_HZ(5), TASK_PRIORITY_LOW),
-  * [TASK_ADC_INTERNAL] = DEFINE_TASK("ADCINTERNAL", NULL, NULL, adcInternalProcess, TASK_PERIOD_HZ(1), TASK_PRIORITY_LOWEST),
-  * [TASK_PINIOBOX] = DEFINE_TASK("PINIOBOX", NULL, NULL, pinioBoxUpdate, TASK_PERIOD_HZ(20), TASK_PRIORITY_LOWEST),
-  * [TASK_RANGEFINDER] = DEFINE_TASK("RANGEFINDER", NULL, NULL, taskUpdateRangefinder, TASK_PERIOD_HZ(10), TASK_PRIORITY_LOWEST),
-  * [TASK_SPEED_NEGOTIATION] = DEFINE_TASK("SPEED_NEGOTIATION", NULL, NULL, speedNegotiationProcess, TASK_PERIOD_HZ(100), TASK_PRIORITY_LOW),
-  * [TASK_RC_STATS] = DEFINE_TASK("RC_STATS", NULL, NULL, rcStatsUpdate, TASK_PERIOD_HZ(100), TASK_PRIORITY_LOW),
+
+
+| Task id                 | Task name          | Subtask | Check function | Task function            | Period                    | Priority    | 
+| ----------------------- | ------------------ | ------ | -------------- | ------------------------- | ------------------------- | ----------- |
+| TASK_SYSTEM             | SYSTEM             | LOAD   |                | taskSystemLoad            | 10Hz                      | MEDIUM_HIGH |
+| TASK_MAIN               | SYSTEM             | UPDATE |                | taskMain                  | 1000Hz                    | MEDIUM_HIGH |
+| TASK_SERIAL             | SERIAL             |        |                | taskHandleSerial          | 100Hz                     | LOW |
+| TASK_BATTERY_ALERTS     | BATTERY_ALERTS     |        |                | taskBatteryAlerts         | 5Hz                       | MEDIUM|
+| TASK_BATTERY_VOLTAGE    | BATTERY_VOLTAGE    |        |                | batteryUpdateVoltage      | SLOW_VOLTAGE_TASK_FREQ_HZ | MEDIUM|
+| TASK_BATTERY_CURRENT    | BATTERY_CURRENT    |        |                | batteryUpdateCurrentMeter | 50Hz                      | MEDIUM|
+| TASK_TRANSPONDER        | TRANSPONDER        |        |                | transponderUpdate         | 250Hz                     | LOW|
+| TASK_STACK_CHECK        | STACKCHECK         |        |                | taskStackCheck            | 10Hz                      | LOWEST|
+| TASK_GYRO               | GYRO               |        |                | taskGyroSample            | GYROPID_DESIRED_PERIOD    | REALTIME|
+| TASK_FILTER             | FILTER             |        |                | taskFiltering             | GYROPID_DESIRED_PERIOD    | REALTIME|
+| TASK_PID                | PID                |        |                | taskMainPidLoop           | GYROPID_DESIRED_PERIOD    | REALTIME|
+| TASK_ACCEL              | ACC                |        |                | taskUpdateAccelerometer   | 1000Hz                    | MEDIUM|
+| TASK_ATTITUDE           | ATTITUDE           |        |                | imuUpdateAttitude         | 100Hz                     | MEDIUM|
+| TASK_RX                 | RX                 |        | rxUpdateCheck  | taskUpdateRxMain          | 33Hz                      | HIGH|
+| TASK_DISPATCH           | DISPATCH           |        |                | dispatchProcess           | 1000Hz                    | HIGH|
+| TASK_BEEPER             | BEEPER             |        |                | beeperUpdate              | 100Hz                     | LOW|
+| TASK_GPS                | GPS                |        |                | gpsUpdate                 | TASK_GPS_RATE             | MEDIUM|
+| TASK_GPS_RESCUE         | GPS_RESCUE         |        |                | taskGpsRescue             | TASK_GPS_RESCUE_RATE_HZ   | MEDIUM|
+| TASK_ALTHOLD            | ALTHOLD            |        |                | updateAltHoldState        | ALTHOLD_TASK_RATE_HZ      | LOW|
+| TASK_COMPASS            | COMPASS            |        |                | taskUpdateMag             | TASK_COMPASS_RATE_HZ      | LOW|
+| TASK_BARO               | BARO               |        |                | taskUpdateBaro            | TASK_BARO_RATE_HZ         | LOW|
+| TASK_ALTITUDE           | ALTITUDE           |        |                | taskCalculateAltitude     | TASK_ALTITUDE_RATE_HZ     | LOW|
+| TASK_DASHBOARD          | DASHBOARD          |        |                | dashboardUpdate           | 10Hz                      | LOW|
+| TASK_OSD                | OSD                |        | osdUpdateCheck | osdUpdate                 | OSD_FRAMERATE_DEFAULT_HZ  | LOW|
+| TASK_TELEMETRY          | TELEMETRY          |        |                | taskTelemetry             | 250Hz                     | LOW|
+| TASK_LEDSTRIP           | LEDSTRIP           |        |                | ledStripUpdate            | TASK_LEDSTRIP_RATE_HZ     | LOW|
+| TASK_BST_MASTER_PROCESS | BST_MASTER_PROCESS |        |                | taskBstMasterProcess      | 50Hz                      | LOWEST|
+| TASK_ESC_SENSOR         | ESC_SENSOR         |        |                | escSensorProcess          | 100Hz                     | LOW|
+| TASK_CMS                | CMS                |        |                | cmsHandler                | 20Hz                      | LOW|
+| TASK_VTXCTRL            | VTXCTRL            |        |                | vtxUpdate                 | 5Hz                       | LOWEST|
+| TASK_RCDEVICE           | RCDEVICE           |        |                | rcdeviceUpdate            | 20Hz                      | MEDIUM|
+| TASK_CAMCTRL            | CAMCTRL            |        |                | taskCameraControl         | 5Hz                       | LOW|
+| TASK_ADC_INTERNAL       | ADCINTERNAL        |        |                | adcInternalProcess        | 1Hz                       | LOWEST|
+| TASK_PINIOBOX           | PINIOBOX           |        |                | pinioBoxUpdate            | 20Hz                      | LOWEST|
+| TASK_RANGEFINDER        | RANGEFINDER        |        |                | taskUpdateRangefinder     | 10Hz                      | LOWEST|
+| TASK_SPEED_NEGOTIATION  | SPEED_NEGOTIATION  |        |                | speedNegotiationProcess   | 100Hz                     | LOW|
+| TASK_RC_STATS           | RC_STATS           |        |                | rcStatsUpdate             | 100Hz                     | LOW|
+
+
+| Task id              | Note                      |
+| -------------------- | --------------------------| 
+| TASK_SERIAL          | 100 Hz should be enough to flush up to 115 bytes @ 115200 baud |
+| TASK_BATTERY_VOLTAGE | Freq may be updated in tasksInit |
+| TASK_RX              | If event-based scheduling doesn't work| fallback to periodic scheduling |
+| TASK_GPS             | Required to prevent buffer overruns if running at 115200 baud (115 bytes / period < 256 bytes buffer |
 
 
 
