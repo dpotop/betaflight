@@ -22,7 +22,7 @@ For now, I have managed to:
 The next steps, not necessarily in order:
 * Flash to the FS-I6 transmitter and the fs-ai6b receiver to add 10 channels (under ibus protocol).
 * Study if it is possible to control the emitter (or the drone, directly) using a PC. I wonder if it is possible to use PC-based Machine Learning to control the drone.
-* Further tune the rates to allow indoors stable non-jittery flight. I guess my next try will be to have very small rates.
+* Further tune the rates to allow indoors stable non-jittery flight. My next tests try will use very small rates (already programmed into the drone).
 * Add a small echolocator or LIDAR to measure distance to ground and then maintain altitude in a given mode without having to push throttle, or simply add a ceiling and make it so throttle cannot force breaking the ceiling.
 * Imagine a new control law.
 * Better understand the SW and HW architecture, to see if I can modify the code in meaningful ways.
