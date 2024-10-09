@@ -25,6 +25,11 @@ The next steps, not necessarily in order:
 * Further tune the rates to allow indoors stable non-jittery flight. My next tests try will use very small rates (already programmed into the drone).
 * Add a small echolocator or LIDAR to measure distance to ground and then maintain altitude in a given mode without having to push throttle, or simply add a ceiling and make it so throttle cannot force breaking the ceiling.
 * Imagine a new control law.
-* Better understand the SW and HW architecture, to see if I can modify the code in meaningful ways.
+* Better understand the SW and HW architecture, to see if I can modify the code in meaningful ways. The first step will be to fully determine which code is executed and which interrupts trigger it, and when:
+  * Determine whether the application uses preemptive scheduling. For now, I could not find any kind of context switch in the vector handlers. There is some code that is likely part of the HASH/HMAC peripheral/accelerator, but nothing in the .S files. 
+  * If no context switch code is used, the software organization should be pretty simple. Some form of periodic control loop, plus some (non-preemptable) code on various interrupts. And I cannot have long tasks. Or maybe the Cortex M architecture has a separate set of registers for each vector?
+  * Determine how the scheduler works.
+  * Determine how the various devices trigger extra interrupts, most notably timers and DMAs.
+  * Determine how and when timers and DMAs are triggered.
 
 As a long-term objective, being a full-time embedded systems researcher, I would like to see if modern software design methods for embedded control systems (like those used for commercial aircraft control software) can be applied here. In any case, I'm starting slow, one step at a time.
