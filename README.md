@@ -5,7 +5,7 @@ I'm a newcomer to the drone community, where I came together with my son.
 My objective is to understand the way the flight controller works in order to be able to extend it with new control algorithms. The medium-term objective I have is to be able to allow my quad drone to [maintain a stick in equilibrium on top of it](https://www.youtube.com/watch?v=XmYRQi48s-8). This is a form of [inverted pendulum](https://en.wikipedia.org/wiki/Inverted_pendulum), and a nice ersatz for the basic control problems behind space launchers.
 
 For now, I have managed to:
-* Order [the hardware](drone-hw.md) and build the drone.
+* Order [the hardware](dpotop-hw.md) and build the drone.
 * Sort out the initial communication and configuration problems (charging a battery, assigning aux channels...). All of this is new for me.
 * Recompile betaflight and flash it (and the drone still works!).
   * Recompilation is done under full control, with my own scripts extracted from the automated compilation process.
