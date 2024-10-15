@@ -109,29 +109,29 @@ The original description:
 
 Base taken from betaflight/src/main/startup/stm32//startup_stm32f40xx.s
 
-| Vector                 | Comment/function               |
-| ---------------------- | ------------------------------ |
-| _estack                | system stack. The memory organization is under betaflight/src/link/stm32_flash_f405.ld |
-|  Reset_Handler         | betaflight/src/main/startup/stm32/startup_stm32f40xx.s |
-|  NMI_Handler           | empty function |
-|  HardFault_Handler     | non-empty, but terminates execution src/main/fc/hardfaults.c  |
-|  MemManage_Handler     | empty function |
-|  BusFault_Handler      | empty function |
-|  UsageFault_Handler    | empty function |
-|  0                     | |
-|  0                     | |
-|  0                     | |
-|  0                     | |
-|  SVC_Handler           | empty function, no SVC! |
-|  DebugMon_Handler      | empty function |
-|  0                     | |
-|  PendSV_Handler        | empty function |
-|  SysTick_Handler       | non-empty (lib/main/CMSIS/Core/Include/core_cm4.h) not clear what it does.
-                                   It manipulates the system timer (SysTick, control defined in betaflight/lib/main/CMSIS/Core/Include/core_cm4.h)
-				   but calls no function (HAL_IncTick is not called as it is not present in the memory map).  |
-  
-  /* External Interrupts */
-|     WWDG_IRQHandler                   /* Window WatchDog              */ empty function                                     
+| Vector (function name) | Function     | Implementation | Comment |
+| ---------------------- | ------------ | -------------- | ---- |
+| _estack                | system stack |                | The memory organization is under betaflight/src/link/stm32_flash_f405.ld |
+|  Reset_Handler         |              |                | betaflight/src/main/startup/stm32/startup_stm32f40xx.s |
+|  NMI_Handler           |              | empty function | |
+|  HardFault_Handler     |              | non-empty, but terminates execution | src/main/fc/hardfaults.c  |
+|  MemManage_Handler     |              | empty function | |
+|  BusFault_Handler      |              | empty function | |
+|  UsageFault_Handler    |              | empty function | |
+|  0                     |              |                | |
+|  0                     |              |                | |
+|  0                     |              |                | |
+|  0                     |              |                | |
+|  SVC_Handler           |              | empty function | no SVC! |
+|  DebugMon_Handler      |              | empty function | |
+|  0                     |              |                | |
+|  PendSV_Handler        |              | empty function | |
+|  SysTick_Handler       |              | non-empty      | (lib/main/CMSIS/Core/Include/core_cm4.h) not clear what it does.  It manipulates the system timer (SysTick, control defined in betaflight/lib/main/CMSIS/Core/Include/core_cm4.h) but calls no function (HAL_IncTick is not called as it is not present in the memory map).  |
+| ---------------------- | ------------ | -------------- | ---- |
+|     WWDG_IRQHandler    | Window WatchDog | empty function  | |                                   
+
+
+
 |     PVD_IRQHandler                    /* PVD through EXTI Line detection */ empty function            
 |     TAMP_STAMP_IRQHandler             /* Tamper and TimeStamps through the EXTI line */ empty function         
 |     RTC_WKUP_IRQHandler               /* RTC Wakeup through the EXTI line */ empty function
