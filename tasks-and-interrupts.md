@@ -109,7 +109,8 @@ The original description:
 
 Base taken from betaflight/src/main/startup/stm32//startup_stm32f40xx.s
 
-  .word  _estack                -- system stack. The memory organization is under betaflight/src/link/stm32_flash_f405.ld
+| Vector               | Comment/function               |
+| _estack              | system stack. The memory organization is under betaflight/src/link/stm32_flash_f405.ld |
   .word  Reset_Handler          -- betaflight/src/main/startup/stm32/startup_stm32f40xx.s
   .word  NMI_Handler            -- empty function
   .word  HardFault_Handler      -- non-empty, but terminates execution src/main/fc/hardfaults.c 
