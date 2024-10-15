@@ -127,7 +127,7 @@ Base taken from betaflight/src/main/startup/stm32//startup_stm32f40xx.s
 |  0                     |              |                | |
 |  PendSV_Handler        |              | empty function | |
 |  SysTick_Handler       |              | non-empty      | (lib/main/CMSIS/Core/Include/core_cm4.h) not clear what it does.  It manipulates the system timer (SysTick, control defined in betaflight/lib/main/CMSIS/Core/Include/core_cm4.h) but calls no function (HAL_IncTick is not called as it is not present in the memory map).  |
-| ---------------------- | ------------ | -------------- | ---- |
+---
 |     WWDG_IRQHandler    | Window WatchDog | empty function  | |                                   
 
 
