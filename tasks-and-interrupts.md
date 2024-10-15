@@ -133,12 +133,12 @@ Extracted from [startup_stm32f40xx.s](src/main/startup/stm32/startup_stm32f40xx.
 
 | Vector (function name)        | Function                     | Implementation       |
 | ----------------------------- | ---------------------------- | -------------------- |
-| WWDG_IRQHandler               | Window WatchDog              | empty function       |
+| WWDG_IRQHandler               | Window WatchDog                             | empty function       |
 | PVD_IRQHandler                | PVD through EXTI Line detection             | empty function       |     
 | TAMP_STAMP_IRQHandler         | Tamper and TimeStamps through the EXTI line | empty function       | 
 | RTC_WKUP_IRQHandler           | RTC Wakeup through the EXTI line            | empty function       |
-| FLASH_IRQHandler              | FLASH                        | empty function     |
-| RCC_IRQHandler                | RCC                          | empty function     |      
+| FLASH_IRQHandler              | FLASH                                       | empty function     |
+| RCC_IRQHandler                | RCC                                         | empty function     |      
 | EXTI0_IRQHandler              | EXTI Line0                   | src/main/drivers/mcu/stm32/exti.c, fun. EXTI_IRQHandler, mask b0001 |
 | EXTI1_IRQHandler              | EXTI Line1                   | src/main/drivers/mcu/stm32/exti.c, fun. EXTI_IRQHandler, mask b0010 |
 | EXTI2_IRQHandler              | EXTI Line2                   | src/main/drivers/mcu/stm32/exti.c, fun. EXTI_IRQHandler, mask b0100 |
@@ -153,9 +153,9 @@ Extracted from [startup_stm32f40xx.s](src/main/startup/stm32/startup_stm32f40xx.
 | DMA1_Stream6_IRQHandler       | DMA1 Stream 6                | --//-- |
 | ADC_IRQHandler                | ADC1, ADC2 and ADC3s         | empty function |
 | CAN1_TX_IRQHandler            | CAN1 TX                      | empty function |                    
-| CAN1_RX0_IRQHandler           | CAN1 RX0                     | --//-- |           
-| CAN1_RX1_IRQHandler           | CAN1 RX1                     | --//-- |                       
-| CAN1_SCE_IRQHandler           | CAN1 SCE                     | --//-- |                     
+| CAN1_RX0_IRQHandler           | CAN1 RX0                     | empty function |           
+| CAN1_RX1_IRQHandler           | CAN1 RX1                     | empty function |                       
+| CAN1_SCE_IRQHandler           | CAN1 SCE                     | empty function |                     
 | EXTI9_5_IRQHandler            | External Line[9:5]s          | src/main/drivers/mcu/stm32/exti.c, fun. EXTI_IRQHandler, mask 0x3e0  |
 | TIM1_BRK_TIM9_IRQHandler      | TIM1 Break and TIM9          | src/main/drivers/mcu/stm32/timer_hal.c, declared using _TIM_IRQ_HANDLER    |     
 | TIM1_UP_TIM10_IRQHandler      | TIM1 Update and TIM10        | --//-- |
@@ -169,7 +169,7 @@ Extracted from [startup_stm32f40xx.s](src/main/startup/stm32/startup_stm32f40xx.
 | I2C2_EV_IRQHandler            | I2C2 Event                   | --//-- |                 
 | I2C2_ER_IRQHandler            | I2C2 Error                   | --//-- |                 
 | SPI1_IRQHandler               | SPI1                         | empty function |
-| SPI2_IRQHandler               | SPI2                         | --//-- |
+| SPI2_IRQHandler               | SPI2                         | empty function |
 | USART1_IRQHandler             | USART1                       | emacs src/main/drivers/serial_uart.c |                
 | USART2_IRQHandler             | USART2                       | --//-- |
 | USART3_IRQHandler             | USART3                       | --//-- |          
@@ -181,8 +181,8 @@ Extracted from [startup_stm32f40xx.s](src/main/startup/stm32/startup_stm32f40xx.
 | TIM8_TRG_COM_TIM14_IRQHandler | TIM8 Trigger/Commutation, TIM14 | --//-- |
 | TIM8_CC_IRQHandler            | TIM8 Capture Compare         | --//-- |                    
 | DMA1_Stream7_IRQHandler       | DMA1 Stream7                 | src/main/drivers/dma.[hc]. DEFINE_DMA_IRQ_HANDLER is used to define the IRQ handlers |
-| FSMC_IRQHandler               | FSMC                         | empty function |                 
-| SDIO_IRQHandler               | SDIO                         | empty function | 
+| FSMC_IRQHandler               | FSMC                           | empty function |                 
+| SDIO_IRQHandler               | SDIO                           | empty function | 
 | TIM5_IRQHandler               | TIM5                         | src/main/drivers/mcu/stm32/timer_hal.c, declared using _TIM_IRQ_HANDLER |              
 | SPI3_IRQHandler               | SPI3                         | --//-- |   
 | UART4_IRQHandler              | UART4                        | emacs src/main/drivers/serial_uart.c |       
@@ -194,12 +194,12 @@ Extracted from [startup_stm32f40xx.s](src/main/startup/stm32/startup_stm32f40xx.
 | DMA2_Stream2_IRQHandler       | DMA2 Stream 2                | --//-- |
 | DMA2_Stream3_IRQHandler       | DMA2 Stream 3                | --//-- |
 | DMA2_Stream4_IRQHandler       | DMA2 Stream 4                | --//-- |          
-| ETH_IRQHandler                | Ethernet                     | empty function |
+| ETH_IRQHandler                | Ethernet                       | empty function |
 | ETH_WKUP_IRQHandler           | Ethernet Wakeup through EXTI line | empty function |                
-| CAN2_TX_IRQHandler            | CAN2 TX                      | empty function |                   
-| CAN2_RX0_IRQHandler           | CAN2 RX0                     | --//-- |       
-| CAN2_RX1_IRQHandler           | CAN2 RX1                     | --//-- |                   
-| CAN2_SCE_IRQHandler           | CAN2 SCE                     | --//-- |                 
+| CAN2_TX_IRQHandler            | CAN2 TX                        | empty function |                   
+| CAN2_RX0_IRQHandler           | CAN2 RX0                       | empty function |       
+| CAN2_RX1_IRQHandler           | CAN2 RX1                       | empty function |                   
+| CAN2_SCE_IRQHandler           | CAN2 SCE                       | empty function |                 
 | OTG_FS_IRQHandler             | USB OTG FS                   | src/main/drivers/mcu/stm32/vcpf4/stm32f4xx_it.c |
 | DMA2_Stream5_IRQHandler       | DMA2 Stream 5                | src/main/drivers/dma.[hc]. DEFINE_DMA_IRQ_HANDLER is used to define the IRQ handlers |
 | DMA2_Stream6_IRQHandler       | DMA2 Stream 6                | --//-- |
@@ -207,14 +207,14 @@ Extracted from [startup_stm32f40xx.s](src/main/startup/stm32/startup_stm32f40xx.
 | USART6_IRQHandler             | USART6                       | src/main/drivers/serial_uart.c |         
 | I2C3_EV_IRQHandler            | I2C3 event                   | src/main/drivers/mcu/stm32/bus_i2c_hal.c |                           
 | I2C3_ER_IRQHandler            | I2C3 error                   | --//-- |                      
-| OTG_HS_EP1_OUT_IRQHandler     | USB OTG HS End Point 1 Out   | empty function |                
-| OTG_HS_EP1_IN_IRQHandler      | USB OTG HS End Point 1 In    | empty function |           
+| OTG_HS_EP1_OUT_IRQHandler     | USB OTG HS End Point 1 Out     | empty function |                
+| OTG_HS_EP1_IN_IRQHandler      | USB OTG HS End Point 1 In      | empty function |           
 | OTG_HS_WKUP_IRQHandler        | USB OTG HS Wakeup through EXTI | empty function |                      
-| OTG_HS_IRQHandler             | USB OTG HS                   | empty function |          
-| DCMI_IRQHandler               | DCMI                         | empty function |          
-| CRYP_IRQHandler               | CRYP crypto                  | empty function |       
-| HASH_RNG_IRQHandler           | Hash and Rng                 | empty function |
-| FPU_IRQHandler                | FPU                          | empty function |
+| OTG_HS_IRQHandler             | USB OTG HS                     | empty function |          
+| DCMI_IRQHandler               | DCMI                           | empty function |          
+| CRYP_IRQHandler               | CRYP crypto                    | empty function |       
+| HASH_RNG_IRQHandler           | Hash and Rng                   | empty function |
+| FPU_IRQHandler                | FPU                            | empty function |
 
 
 ## Non-empty interrupt vectors that trigger computations in **my** configuration
@@ -228,7 +228,7 @@ Extracted from [startup_stm32f40xx.s](src/main/startup/stm32/startup_stm32f40xx.
 |           | Calls no function, only does some bookkeeping |
 |           | Runs on 1ms (?) |
 | EXTI      | [exti.c](src/main/drivers/mcu/stm32/exti.c) |
-| DMA       | [dma.c](src/main/drivers/dma.h [](src/main/drivers/dma.c) |
+| DMA       | [dma.h](src/main/drivers/dma.h) [dma.c](src/main/drivers/dma.c) |
 | TIM       | [timer_hal.c](src/main/drivers/mcu/stm32/timer_hal.c) |
 | I2C       | [bus_i2c_hal.c](src/main/drivers/mcu/stm32/bus_i2c_hal.c) |
 | USART     | [serial_uart.c](src/main/drivers/serial_uart.c)  |
