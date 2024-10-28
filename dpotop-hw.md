@@ -8,7 +8,7 @@
 * Flight controller [SpeedyBee F405 V4 BLS 55A 30X30 FC+ESC Stack](https://www.speedybee.com/speedybee-f405-v4-bls-55a-30x30-fc-esc-stack/)
 * Battery [Ovonic Lipo 4s 1550mAh 100C 14.8V FPV (XT60 connector)](https://www.amazon.fr/dp/B09WMPG7GF)
 
-#### Receiver [ibus telemetry mod](https://betaflight.com/docs/wiki/guides/current/ibus-telemetry) 
+#### Receiver [ibus telemetry mod](https://betaflight.com/docs/wiki/guides/current/ibus-telemetry), which I already performed (and works!)
 * [1n4148 diode](https://fr.farnell.com/multicomp-pro/1n4148/diode-faible-signal-simple-do/dp/4245056)
 * 10k resistor
 
@@ -27,10 +27,11 @@
 * [Electronic food scale](https://www.aliexpress.com/item/1005006084973087.html)
 
 ## Not yet installed/used
-* [Propeller guards](https://www.aliexpress.com/item/32717569402.html)
+* [Propeller guards](https://www.aliexpress.com/item/32717569402.html). The screws provided with the guards were too short. I will have to buy new ones before installing them.
 * [FTDI 232 USB to TTL cable](https://www.amazon.fr/DSD-TECH-SH-U09G-intégré-FT232RL/dp/B083HVM7VZ) - needed to flash the transmitter to allow for 10 telemetry channels
 * [MTF-02 optical flow & LIDAR sensor](https://www.aliexpress.com/item/1005006942233213.html)
 * FPV camera [RunCam Phoenix 2 SE V2](https://www.aliexpress.com/item/1005006681300403.html)
+* Intelligent Camera [Realtek AMB82 Mini](https://www.seeedstudio.com/AMB82-MINI-RTL8735B-IoT-AI-Camera-Dev-Board-p-5584.html)
 
 ## Other stuff
 * [Thread lock](https://www.amazon.fr/dp/B0BN6B1Y84)
