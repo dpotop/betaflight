@@ -20,16 +20,29 @@ For now, I have managed to:
 * Add ibus telemetry, following the instruction of [this page](https://betaflight.com/docs/wiki/guides/current/ibus-telemetry). This required a diode, a resistor, and some soldering. I am really impressed at how easy it was to re-configure the drone afterwards using the [configurator app](https://app.betaflight.com).
 
 The next steps, not necessarily in order:
-* Flash to the FS-I6 transmitter and the fs-ai6b receiver to add 10 channels (under ibus protocol).
-* Study if it is possible to control the emitter (or the drone, directly) using a PC. I wonder if it is possible to use PC-based Machine Learning to control the drone.
-* Further tune the rates to allow indoors stable non-jittery flight. My next tests try will use very small rates (already programmed into the drone).
-* Add a small echolocator or LIDAR to measure distance to ground and then maintain altitude in a given mode without having to push throttle, or simply add a ceiling and make it so throttle cannot force breaking the ceiling.
-* Imagine a new control law.
-* Better understand the SW and HW architecture, to see if I can modify the code in meaningful ways. The first step will be to fully determine which code is executed and which interrupts trigger it, and when:
-  * Determine whether the application uses preemptive scheduling. For now, I could not find any kind of context switch in the vector handlers. There is some code that is likely part of the HASH/HMAC peripheral/accelerator, but nothing in the .S files. 
-  * If no context switch code is used, the software organization should be pretty simple. Some form of periodic control loop, plus some (non-preemptable) code on various interrupts. And I cannot have long tasks. Or maybe the Cortex M architecture has a separate set of registers for each vector?
-  * Determine how the scheduler works.
-  * Determine how the various devices trigger extra interrupts, most notably timers and DMAs.
-  * Determine how and when timers and DMAs are triggered.
+* General drone management and control objectives:
+  * Flash to the FS-I6 transmitter and the fs-ai6b receiver to add 10 channels (under ibus protocol).
+  * Further tune the rates to allow indoors stable non-jittery flight. My next tests try will use very small rates (already programmed into the drone).
+  * Add the propeller protections.
+* Advanced drone management and control objectives:
+  * Study if it is possible to control the emitter (or the drone, directly) using a PC. I wonder if it is possible to use PC-based Machine Learning to control the drone.
+  * Add a small echolocator or LIDAR to measure distance to ground and then maintain altitude in a given mode without having to push throttle, or simply add a ceiling and make it so throttle cannot force breaking the ceiling.
+* Objectives necessitating advanced changes of betaflight itself
+  * Add a UART-based tracing mechanism separate from the [blackbox](https://betaflight.com/docs/development/Blackbox-Internals) [subsystem](https://betaflight.com/docs/development/Blackbox). As far as I understand, the blackbox subsystem is optimized for tracing key variables during normal execution, not for debugging or for tracing select internal variables with chosen precision. For now, it would seem that UARTs [do not use DMAs](https://github.com/dpotop/betaflight/blob/master/src/main/pg/serial_uart.c) [for RX or TX](https://github.com/dpotop/betaflight/blob/master/src/main/target/common_defaults_post.h).
+    * [On my drone FC](https://github.com/dpotop/betaflight/blob/master/dpotop-doc/SpeedyBee_F405_V4_Stack_Manual_EN.pdf), 4 UARTs seem to be easily accessible through pins:
+      * UART1 - meant for use with the VTX
+      * UART2 - meant for use with the receiver
+      * UART3 - meant for use with the FPV cam
+      * UART6 - meant for use with GPS and compass
+    * Of these, I already use UART2 and plan to use UART6 for the intended purposes. However, for now I do not plan on using the VTX or the camera, so I can use their UARTs for debugging.
+    * What I plan, with either UART1 or UART3, is to enable it, and then use it directly from the scheduler routine to log a small amount of data that will allow me to better understand the functioning of the scheduler.
+  * Better understand the SW and HW architecture, to see if I can modify the code in meaningful ways. The first step will be to fully determine which code is executed and which interrupts trigger it, and when:
+    * Determine whether the application uses preemptive scheduling. For now, I could not find any kind of context switch in the vector handlers. There is some code that is likely part of the HASH/HMAC peripheral/accelerator, but nothing in the .S files. 
+    * If no context switch code is used, the software organization should be pretty simple. Some form of periodic control loop, plus some (non-preemptable) code on various interrupts. And I cannot have long tasks. Or maybe the Cortex M architecture has a separate set of registers for each vector?
+    * Determine how the scheduler works.
+    * Determine how the various devices trigger extra interrupts, most notably timers and DMAs.
+    * Determine how and when timers and DMAs are triggered.
+  * Imagine a new control law.
+* As long-term objective, being a full-time embedded systems researcher, I would like to see if modern software design methods for embedded control systems (like those used for commercial aircraft control software) can be applied here.
 
-As a long-term objective, being a full-time embedded systems researcher, I would like to see if modern software design methods for embedded control systems (like those used for commercial aircraft control software) can be applied here. In any case, I'm starting slow, one step at a time.
+In any case, I'm starting slow, one step at a time.
