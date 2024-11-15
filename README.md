@@ -34,8 +34,8 @@ The next steps, not necessarily in order:
       * UART2 - meant for use with the receiver
       * UART3 - meant for use with the FPV cam
       * UART6 - meant for use with GPS and compass
-    * Of these, I already use UART2 and plan to use UART6 for the intended purposes. However, for now I do not plan on using the VTX or the camera, so I can use their UARTs for debugging.
-    * What I plan, with either UART1 or UART3, is to enable it, and then use it directly from the scheduler routine to log a small amount of data that will allow me to better understand the functioning of the scheduler.
+    * Of these, I already use UART2 and plan to use UART6 for the intended purposes. However, for now I do not plan on using the VTX or the camera for now, so I can use their UARTs temporarily for debugging.
+    * What I plan, with either UART1 or UART3, is [to enable it from the configurator](https://betaflight.com/docs/wiki/configurator/ports-tab), and then use it directly from the scheduler routine to log a small amount of data that will allow me to better understand the functioning of the scheduler.
   * Better understand the SW and HW architecture, to see if I can modify the code in meaningful ways. The first step will be to fully determine which code is executed and which interrupts trigger it, and when:
     * Determine whether the application uses preemptive scheduling. For now, I could not find any kind of context switch in the vector handlers. There is some code that is likely part of the HASH/HMAC peripheral/accelerator, but nothing in the .S files. 
     * If no context switch code is used, the software organization should be pretty simple. Some form of periodic control loop, plus some (non-preemptable) code on various interrupts. And I cannot have long tasks. Or maybe the Cortex M architecture has a separate set of registers for each vector?
